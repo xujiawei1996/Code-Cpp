@@ -1,0 +1,319 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+
+#include<windows.h>
+#include<iostream>
+
+using namespace std;
+
+enum OP
+{
+	Janurary = 1,
+	February,
+	March,
+	April,
+	May,
+	June, 
+	July,
+	August,
+	September,
+	October,
+	November,
+	December
+};
+
+class Date
+{
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+		:_year(year)
+		,_month(month)
+		,_day(day)
+	{}
+
+	Date(const Date& d)
+	{
+		
+	}
+
+	~Date()
+	{
+
+	}
+
+	Date& operator=(const Date& d)
+	{
+		if (this != &d)
+		{
+			_year = d._year;
+			_month = d._month;
+			_day = d._day;
+		}
+		return *this;
+	}
+	//判断输入是否合法
+	bool isture();
+	//判断是否闰年
+	bool isleapyear();
+	//前置加加
+	Date& operator++();
+	//后置加加
+	Date operator++(int);
+	//前置减减
+	Date& operator--();
+	//后置减减
+	Date operator--(int);
+	Date operator+(int days);
+	Date operator-(int days);
+	int operator-(const Date& d);
+	bool operator>(const Date& d);
+	bool operator<(const Date& d);
+	bool operator>=(const Date& d);
+	bool operator<=(const Date& d);
+	bool operator!=(const Date& d);
+
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+
+bool Date::isture()
+{
+	int ismonth = _month;
+	if ((_year > 1900)&&(_month>=1 && _month <= 12 ))
+	{
+		switch(ismonth)
+		{
+		case Janurary:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case February:
+			if (isleapyear())
+			{
+				if (_day <= 29)
+				{
+					return true;
+				}
+			}
+			else
+			{
+				if (_day <= 28)
+				{
+					return true;
+				}
+			}
+			return false;
+			break;
+		case March:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case April:
+			if (_day <= 30)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case May:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case June:
+			if (_day <= 30)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case July:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case August:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case September:
+			if (_day <= 30)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case October:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case November:
+			if (_day <= 30)
+			{
+				return true;
+			}
+			return false;
+			break;
+		case December:
+			if (_day <= 31)
+			{
+				return true;
+			}
+			return false;
+			break;
+		default:
+			cout<<"输入非法"<<endl;
+			return false;
+			break;
+		}
+	}
+	return false;
+}
+
+bool Date::isleapyear()
+{
+	if (_year%4==0 || ((_year%100 != 0) && (_year%400 ==0)))
+	{
+		return true;
+	}
+	return false;
+}
+
+//前置++
+Date& Date::operator++()
+{
+	if (isture())
+	{
+	_day += 1;
+		if (!isture())
+		{
+			_month += 1;
+			_day = 1;
+			if (_month == 13)
+			{
+				_month = 1;
+				_day = 1;
+			}
+		}
+	return *this;
+	}
+	else 
+	{
+		cout<<"输入非法"<<endl;
+		return *this;
+	}
+}
+
+// 后置++
+Date Date::operator++(int)
+{
+	Date temp(*this);
+	if (isture())
+	{
+		_day += 1;
+		if (!isture())
+		{
+			_month += 1;
+			_day = 1;
+			if (_month == 13)
+			{
+				_year += 1;
+				_month = 1;
+				_day = 1;
+			}
+		}
+		return temp;
+	}
+	else 
+	{
+		cout<<"输入非法"<<endl;
+		return temp;
+	}
+}
+
+bool Date::operator>(const Date& d)
+{
+	if (_year >= d._year)
+	{
+		return true;
+	}
+	else 
+		return false;
+}
+bool Date::operator<(const Date& d)
+{
+	if (_year <= d._year)
+	{
+		return true;
+	}
+	else 
+		return false;
+}
+bool Date::operator>=(const Date& d)
+{
+	if (_year >= d._year)
+	{
+		return true;
+	}
+	else 
+		return false;
+}
+bool Date::operator<=(const Date& d)
+{
+	if (_year >= d._year)
+	{
+		return true;
+	}
+	else 
+		return false;
+}
+bool Date::operator!=(const Date& d)
+{
+	if (_year == d._year)
+	{
+		if (_month == d._month)
+		{
+			if (_day == d._day)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	else 
+		return true;
+}
+
+
+void FunTest()
+{
+	Date d1(2016, 12, 31);
+	Date d2(2017, 11, 11);
+	//d2++;
+	//++d1;
+	d1 != d2;
+}
+
+int main()
+{
+	FunTest();
+	system("pause");
+	return 0;
+}
