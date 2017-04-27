@@ -16,7 +16,7 @@ public:
 
 	BigData operator+(const BigData& b); 
 	BigData operator-(BigData& b);
-	BigData operator*(const BigData& b);
+	BigData operator*(BigData& b);
 	BigData operator/(const BigData& b);
 
 	friend std::ostream & operator<<(std::ostream & _cout, const BigData & b)
